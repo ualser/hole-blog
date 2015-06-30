@@ -28,10 +28,12 @@ def add_user():
 	db.session.commit()
 	return 'user added!'
 
-@app.route('/add_post')
+@app.route('/add_post', methods=['POST'])
 def add_post():
-	u = models.User.query.get(3)
-	p = models.Post(body='first post, bitch!', timestamp=datetime.datetime.utcnow(), author=u)
+	u = request.form['user']
+	p = request.form['post']
+	u = models.User.query.get(u)
+	p = models.Post(body=p, timestamp=datetime.datetime.utcnow(), author=u)
 	db.session.add(p)
 	db.session.commit()
 	return "post added"
