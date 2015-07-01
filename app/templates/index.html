@@ -4,4 +4,6 @@
     {% for post in posts %}
     <div><p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p></div>
     {% endfor %}
+{% block form %}{% endblock %}
 {% endblock %}
+

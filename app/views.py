@@ -43,7 +43,7 @@ def view_posts():
 	user = request.args.get('user')
 	u = models.User.query.get(user)
 	posts = u.posts.all()
-	return render_template("index.html",
+	return render_template("form.html",
                            title='Home',
                            user=u,
                            posts=posts)
