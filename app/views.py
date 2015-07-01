@@ -30,13 +30,18 @@ def add_user():
 
 @app.route('/add_post', methods=['POST'])
 def add_post():
-	u = request.form['user']
+	user = request.form['user']
 	p = request.form['post']
-	u = models.User.query.get(u)
+	u = models.User.query.get(user)
 	p = models.Post(body=p, timestamp=datetime.datetime.utcnow(), author=u)
 	db.session.add(p)
 	db.session.commit()
-	return "post added"
+	posts = u.posts.all()
+	return render_template("form.html",
+                           title='Home',
+                           user_id=user,
+                           user=u,
+                           posts=posts)
 
 @app.route('/view_posts')
 def view_posts():
@@ -45,6 +50,7 @@ def view_posts():
 	posts = u.posts.all()
 	return render_template("form.html",
                            title='Home',
+			   user_id=user,
                            user=u,
                            posts=posts)
 
