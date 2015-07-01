@@ -43,5 +43,9 @@ def view_posts():
 	user = request.args.get('user')
 	u = models.User.query.get(user)
 	posts = u.posts.all()
-	print "\n+++++++++++++++++++++++++\n", posts, "\n++++++++++++++++++++++++++\n"
-	return "OK" 
+	return render_template("index.html",
+                           title='Home',
+                           user=u,
+                           posts=posts)
+
+ 
