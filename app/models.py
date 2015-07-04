@@ -5,6 +5,7 @@ class User(db.Model):
     email = db.Column(db.String(120), primary_key=True, index=True, unique=True)
     password = db.Column(db.String(15))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    is_admin = db.Column(db.Boolean, default=False)
     authenticated = db.Column(db.Boolean, default=False)
 
     def __repr__(self):

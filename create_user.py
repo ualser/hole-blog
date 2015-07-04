@@ -1,6 +1,6 @@
 """Create a new admin user able to view the /reports endpoint."""
 from getpass import getpass
-import sys, bcrypt, md5
+import sys, md5
 
 from flask import current_app
 from app import app
@@ -25,7 +25,10 @@ def main():
 	m.update(password)
         print 'Enter nickname: '
 	nickname = raw_input()
-	user = User(nickname=nickname, email=email, password=buffer(m.digest()))
+	print 'Is admin y/n? '
+	answer = raw_input()
+	if answer == 'y': user = User(nickname=nickname, email=email, password=buffer(m.digest()), is_admin=True)
+	else: user = User(nickname=nickname, email=email, password=buffer(m.digest())) 
         db.session.add(user)
         db.session.commit()
         print 'User added.'
