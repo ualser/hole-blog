@@ -17,11 +17,7 @@ def add_post():
 	db.session.add(p)
 	db.session.commit()
 	posts = u.posts.all()
-	return render_template("form.html",
-                           title='Home',
-                           user_id=user,
-                           user=u,
-                           posts=posts)
+	return redirect("http://127.0.0.1:5000/view_posts?email=" + user, 302) 
 
 @app.route('/view_posts')
 @login_required
@@ -86,5 +82,13 @@ def logout():
     logout_user()
     return render_template("logout.html")
 
-def find_all_user_ids():
-    return None 
+@app.context_processor
+def get_all_user_ids():
+    def get_ids():
+	print 'i am in here'
+	ids = []
+	users = models.User.query.order_by(models.User.email)
+	for user in users: 
+		ids.append([user.email, user.nickname])	
+	return ids  
+    return dict(get_all_user_ids=get_ids)

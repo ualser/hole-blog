@@ -7,10 +7,9 @@
     {% endif %}
   </head>
   <body>
-	<div>User 1: <a href="/view_posts?user=1">Home</a></div>
-	<div>User 2: <a href="/view_posts?user=2">Home</a></div>
-	<div>User 3: <a href="/view_posts?user=3">Home</a></div>
-
+	{% for user_id in get_all_user_ids() %}
+		<div><a href="/view_posts?email={{user_id[0]}}">{{user_id[1]}}</a></div>
+	{% endfor %}
     <hr>
     {% block content %}{% endblock %}
   </body>
