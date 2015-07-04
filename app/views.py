@@ -29,7 +29,8 @@ def view_posts():
                            title='Home',
 			   user_id=email,
                            user=e,
-                           posts=posts)
+                           posts=posts,
+			   admin=is_admin(current_user.get_id()))
 
 @app.route('/admin', methods=['GET'])
 @login_required
