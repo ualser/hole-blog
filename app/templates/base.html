@@ -1,19 +1,20 @@
-<html>
-  <head>
-    {% if title %}
-    <title>{{ title }} - microblog</title>
-    {% else %}
-    <title>Welcome to microblog</title>
-    {% endif %}
-  </head>
-  <body>
+{% extends "bootstrap/base.html" %}
+{% block title %}Terrorist Secret Blog{% endblock %}
+
+{% block navbar %}
+	<div class="navbar navbar-default">
+ 	<div class="container-fluid">
 	{% for user_id in get_all_user_ids() %}
-		<div><a href="/view_posts?email={{user_id[0]}}">{{user_id[1]}}</a></div>
-	{% endfor %}
-	{% if admin %}
-		<div><a href="/admin">ChatRoom</a></div>
-	{% endif %}
-    <hr>
-    {% block content %}{% endblock %}
-  </body>
-</html>
+                <div><a href="/view_posts?email={{user_id[0]}}">{{user_id[1]}}</a></div>
+        {% endfor %}
+        {% if admin %}
+                <div><a href="/admin">ChatRoom</a></div>
+        {% endif %}
+	</div>
+	</div>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+
