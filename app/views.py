@@ -22,7 +22,7 @@ def add_post():
 @app.route('/view_posts')
 @login_required
 def view_posts():
-	email = request.args.get('email')
+	email = request.args.get('email') 
 	e = models.User.query.get(email)
 	posts = e.posts.all()
 	return render_template("form.html",
@@ -42,6 +42,18 @@ def admin():
 def is_admin(email):
 	u = models.User.query.get(email)
 	return u.is_admin
+
+@app.route('/change_password')
+@login_required
+def change_password():
+	new_pass = request.args.get('new_pass')
+	user_id = current_user.get_id()
+	m = md5.new()
+        m.update(new_pass)
+	user = models.User.query.get(user_id)
+	user.password = buffer(m.digest())
+	db.session.commit() 
+	return 'OK'
 	
 
 @login_manager.user_loader
