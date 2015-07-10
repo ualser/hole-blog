@@ -47,6 +47,7 @@ def is_admin(email):
 @login_required
 def change_password():
 	new_pass = request.args.get('new_pass')
+	print "new pass is ", new_pass
 	user_id = current_user.get_id()
 	m = md5.new()
         m.update(new_pass)
@@ -71,17 +72,26 @@ def login():
     """For GET requests, display the login form. For POSTS, login the current user
     by processing the form."""
     form = LoginForm()
+    print 'berfore if'
     if form.validate_on_submit():
+	print 'if 1'
 	user = models.User.query.get(form.email.data)
 	if user:
+	   print 'if 2'
 	   m=md5.new()
 	   m.update(form.password.data)	
+	   print user.password, buffer(m.digest())
 	   if user.password == buffer(m.digest()):
+		print 'if 3'
 		user.authenticated = True
                 db.session.add(user)
                 db.session.commit()
                 login_user(user, remember=True)
-                return redirect("http://127.0.0.1:5000/view_posts?email="+form.email.data, 302)
+		print "now will be redirect!"
+		return redirect("http://127.0.0.1:5000/view_posts?email=" + current_user.get_id(), 302)
+    redirect_url = request.args.get('redirect_url')
+    if redirect_url:
+	return redirect('http://' + redirect_url,  302)
     return render_template("login.html", form=form)
 
 @app.route("/logout", methods=["GET"])
