@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Search results</h1>
+    {% for row in search_results %}
+    <div><p><b>{{ row[0] }}</b> said: <b>{{ row[1] }}</b></p></div>
+    {% endfor %}
+{% block form %}{% endblock %}
+{% endblock %}
+

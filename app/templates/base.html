@@ -10,6 +10,10 @@
         {% if admin %}
                 <div><a href="/admin">ChatRoom</a></div>
         {% endif %}
+
+	<form name="search-form" action="/search" method="POST">
+		<input name="search" type="search"/>
+	</form> 
 	</div>
 	</div>
 {% endblock %}

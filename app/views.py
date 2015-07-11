@@ -72,17 +72,12 @@ def login():
     """For GET requests, display the login form. For POSTS, login the current user
     by processing the form."""
     form = LoginForm()
-    print 'berfore if'
     if form.validate_on_submit():
-	print 'if 1'
 	user = models.User.query.get(form.email.data)
 	if user:
-	   print 'if 2'
 	   m=md5.new()
 	   m.update(form.password.data)	
-	   print user.password, buffer(m.digest())
 	   if user.password == buffer(m.digest()):
-		print 'if 3'
 		user.authenticated = True
                 db.session.add(user)
                 db.session.commit()
@@ -104,6 +99,33 @@ def logout():
     db.session.commit()
     logout_user()
     return render_template("logout.html")
+
+@app.route("/search", methods=["POST"])
+def search():
+    search_results = [] 
+    search_string = request.form["search"]
+    posts = []
+    q = db.engine.execute("SELECT user_id, body FROM post WHERE body LIKE {0}".format(search_string))
+    for row in q:
+    	posts.append(row)
+    nicknames = get_nicknames(posts)
+    for i in range(len(nicknames)):
+	print i, posts[i]
+	search_results.append([nicknames[i], posts[i][1]])
+    """
+    for oin range(len(nicknames)):
+    	search_results[nicknames[i]] = q[i][1]
+    """
+    print search_results
+    return render_template("search_results.html", search_results = search_results)
+
+def get_nicknames(posts):
+    nicknames = []
+    query_result = ''
+    for row in posts:
+	query_result = db.engine.execute("SELECT nickname FROM user WHERE email=?", [row[0]])
+   	for item in query_result: nicknames.append(item[0])
+    return nicknames
 
 @app.context_processor
 def get_all_user_ids():
