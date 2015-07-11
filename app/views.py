@@ -17,7 +17,7 @@ def add_post():
 	db.session.add(p)
 	db.session.commit()
 	posts = u.posts.all()
-	return redirect("http://127.0.0.1:5000/view_posts?email=" + user, 302) 
+	return redirect("http://192.168.72.133:5000/view_posts?email=" + user, 302) 
 
 @app.route('/view_posts')
 @login_required
@@ -71,6 +71,11 @@ def user_loader(user_id):
 def login():
     """For GET requests, display the login form. For POSTS, login the current user
     by processing the form."""
+    if current_user.is_authenticated():
+	redirect_url = request.args.get('redirect_url')
+    	if redirect_url:
+        	return redirect('http://' + redirect_url,  302)
+	else: return redirect("http://192.168.72.133:5000/view_posts?email=" + current_user.get_id(), 302)
     form = LoginForm()
     if form.validate_on_submit():
 	user = models.User.query.get(form.email.data)
@@ -83,10 +88,7 @@ def login():
                 db.session.commit()
                 login_user(user, remember=True)
 		print "now will be redirect!"
-		return redirect("http://127.0.0.1:5000/view_posts?email=" + current_user.get_id(), 302)
-    redirect_url = request.args.get('redirect_url')
-    if redirect_url:
-	return redirect('http://' + redirect_url,  302)
+		return redirect("http://192.168.72.133:5000/view_posts?email=" + current_user.get_id(), 302)
     return render_template("login.html", form=form)
 
 @app.route("/logout", methods=["GET"])
@@ -126,6 +128,11 @@ def get_nicknames(posts):
 	query_result = db.engine.execute("SELECT nickname FROM user WHERE email=?", [row[0]])
    	for item in query_result: nicknames.append(item[0])
     return nicknames
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    # do stuff
+    return render_template("unauth.html")
 
 @app.context_processor
 def get_all_user_ids():
