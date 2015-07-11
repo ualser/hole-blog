@@ -27,9 +27,10 @@ def main():
 	nickname = raw_input()
 	print 'Is admin y/n? '
 	answer = raw_input()
-	if answer == 'y': user = User(nickname=nickname, email=email, password=buffer(m.digest()), is_admin=True)
-	else: user = User(nickname=nickname, email=email, password=buffer(m.digest())) 
-        db.session.add(user)
+	if answer == 'y': user = User(nickname=nickname, email=email, password=m.hexdigest(), is_admin=True)
+	else: user = User(nickname=nickname, email=email, password=m.hexdigest()) 
+	print m.hexdigest()
+	db.session.add(user)
         db.session.commit()
         print 'User added.'
 

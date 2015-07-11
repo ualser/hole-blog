@@ -52,7 +52,7 @@ def change_password():
 	m = md5.new()
         m.update(new_pass)
 	user = models.User.query.get(user_id)
-	user.password = buffer(m.digest())
+	user.password = buffer(m.hexdigest())
 	db.session.commit() 
 	return 'OK'
 	
@@ -82,7 +82,7 @@ def login():
 	if user:
 	   m=md5.new()
 	   m.update(form.password.data)	
-	   if user.password == buffer(m.digest()):
+	   if user.password == buffer(m.hexdigest()):
 		user.authenticated = True
                 db.session.add(user)
                 db.session.commit()
