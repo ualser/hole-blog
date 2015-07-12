@@ -1,24 +1,75 @@
-{% extends "bootstrap/base.html" %}
-{% block title %}Terrorist Secret Blog{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <title>SuperApp{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
 
-{% block navbar %}
-	<div class="navbar navbar-default">
- 	<div class="container-fluid">
-	{% for user_id in get_all_user_ids() %}
-                <div><a href="/view_posts?email={{user_id[0]}}">{{user_id[1]}}</a></div>
-        {% endfor %}
-        {% if admin %}
-                <div><a href="/admin">ChatRoom</a></div>
-        {% endif %}
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
+    {% endblock %}
+  </head>
+  <body>
+     
+	 <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <div class="dropdown" style="margin-top: 10px">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Select option
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        {% for user_id in get_all_user_ids() %}
+                       <li><a href="/view_posts?email={{user_id[0]}}">{{user_id[1]}}</a></li>
+               {% endfor %}
+               {% if admin %}
+                       <li><a href="/admin">ChatRoom</a></li>
+               {% endif %}
 
-	<form name="search-form" action="/search" method="POST">
-		<input name="search" type="search"/>
-	</form> 
-	</div>
-	</div>
-{% endblock %}
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                                        
+        {% if not session.logged_in %}
+                    <li><a href="#">Login or Signup</a></li>
+                  {% else %}
+                    <li><a href="#">Logout</a></li>
+                  {% endif %}
 
-{% block content %}
-{% endblock %}
+                                        
+                    <li><a href="#">Sign In</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+	 
+	 
+	 
+    <div style="margin-top:50px" class="container body-content">
+          {% block content %}
+          {% endblock %}
+        <hr>
+        
+    </div>
+       {% block footer %}
+        <footer class="footer">
+            <p>&copy; SuperApp</p>
+        </footer>
+        {% endblock %}
 
+{% block js_footer %}
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    {% endblock %}
+  </body>
+</html>
 
