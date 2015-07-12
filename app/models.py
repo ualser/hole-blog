@@ -35,3 +35,12 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post %r>' % (self.body)
+
+class Key(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    ssh_key = db.Column(db.Text())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.email'))
+
+    def __repr__(self):
+        return '<Post %r>' % (self.body)
+

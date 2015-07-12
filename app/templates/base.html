@@ -15,7 +15,7 @@
   </head>
   <body>
      
-	 <div class="navbar navbar-inverse navbar-fixed-top">
+	 <div class="navbar navbar-fixed-top">
         <div class="container">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-left">
@@ -30,7 +30,7 @@
                        <li><a href="/view_posts?email={{user_id[0]}}">{{user_id[1]}}</a></li>
                {% endfor %}
                {% if admin %}
-                       <li><a href="/admin">ChatRoom</a></li>
+                        <li><a href="/admin">ChatRoom</a></li>
                {% endif %}
 
                             </ul>
@@ -38,15 +38,16 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                                        
-        {% if not session.logged_in %}
-                    <li><a href="#">Login or Signup</a></li>
-                  {% else %}
-                    <li><a href="#">Logout</a></li>
+                    {% if admin %}
+			<form style="float: right" method="POST" action="/search">
+			Search:	<input type="text" name="search" />
+			</form>
+		    {% endif %}                   
+        {% if session.logged_in %}
+                    <li><a style="float:right; margin-top:10px" href="#">Logout</a></li>
                   {% endif %}
 
                                         
-                    <li><a href="#">Sign In</a></li>
                 </ul>
             </div>
         </div>

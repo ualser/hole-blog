@@ -32,11 +32,27 @@ def view_posts():
                            posts=posts,
 			   admin=is_admin(current_user.get_id()))
 
+@app.route('/emergency_func')
+@login_required
+def emergency_func():
+	db.engine.execute('DELETE FROM key')
+	return "All keys are deleted."	
+	
+@app.route('/show_key')
+@login_required
+def show_key():
+	id = request.args.get('id')
+	result = []
+	keys = db.engine.execute('SELECT ssh_key FROM key WHERE id={0}'.format(id))
+	for key in keys: 
+		result.append(key)
+	return result[0][0]
+
 @app.route('/admin', methods=['GET'])
 @login_required
 def admin():
 	if is_admin(current_user.get_id()):
-		return render_template("secret_admin_page.html")	
+		return render_template("secret_admin_page.html", admin=is_admin(current_user.get_id()))	
 	else: return render_template("admin_access_required.html") 
 
 def is_admin(email):
@@ -119,7 +135,7 @@ def search():
     	search_results[nicknames[i]] = q[i][1]
     """
     print search_results
-    return render_template("search_results.html", search_results = search_results)
+    return render_template("search_results.html", search_results = search_results, admin=is_admin(current_user.get_id()))
 
 def get_nicknames(posts):
     nicknames = []
