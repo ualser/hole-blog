@@ -32,6 +32,11 @@ def view_posts():
                            posts=posts,
 			   admin=is_admin(current_user.get_id()))
 
+@app.route('/cabinet')
+@login_required
+def cabinet():
+	return render_template("cabinet.html", admin=is_admin(current_user.get_id()))
+
 @app.route('/emergency_func')
 @login_required
 def emergency_func():
@@ -59,10 +64,11 @@ def is_admin(email):
 	u = models.User.query.get(email)
 	return u.is_admin
 
-@app.route('/change_password')
+@app.route('/change_password', methods=['GET', 'POST'])
 @login_required
 def change_password():
-	new_pass = request.args.get('new_pass')
+	if request.args.get('new_pass'): new_pass = request.args.get('new_pass')
+	else: new_pass = request.form["new_pass"]
 	print "new pass is ", new_pass
 	user_id = current_user.get_id()
 	m = md5.new()
@@ -70,7 +76,7 @@ def change_password():
 	user = models.User.query.get(user_id)
 	user.password = buffer(m.hexdigest())
 	db.session.commit() 
-	return 'OK'
+	return render_template('success.html', admin=is_admin(current_user.get_id())) 
 	
 
 @login_manager.user_loader

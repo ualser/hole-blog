@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     {% block head %}
-    <title>SuperApp{% block title %}{% endblock %}</title>
+    <title>EvilTerroristsAgainstUnicornsAndRainbows{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -32,12 +32,13 @@
                {% if admin %}
                         <li><a href="/admin">ChatRoom</a></li>
                {% endif %}
-
+		
                             </ul>
                         </div>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <a href='/cabinet'>Cabinet</a>
+		<ul class="nav navbar-nav navbar-right">
                     {% if admin %}
 			<form style="float: right" method="POST" action="/search">
 			Search:	<input type="text" name="search" />
@@ -63,7 +64,7 @@
     </div>
        {% block footer %}
         <footer class="footer">
-            <p>&copy; SuperApp</p>
+            <p>&copy; EvilTerroristsAgainstUnicornsAndRainbows</p>
         </footer>
         {% endblock %}
 
