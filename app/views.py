@@ -56,8 +56,11 @@ def show_key():
 @app.route('/admin', methods=['GET'])
 @login_required
 def admin():
+	posts = [["terror boss", "cannot access emergency_func, please fix ASAP"],
+		 ["backdoor penetrator", "show_key dont show my ssh key, have you changed my id???"],
+		 ["dr. evil", "cannot access <i>PUT DOOMSDAY MACHINE HERE</i>, is it up?"]]
 	if is_admin(current_user.get_id()):
-		return render_template("secret_admin_page.html", admin=is_admin(current_user.get_id()))	
+		return render_template("secret_admin_page.html", admin=is_admin(current_user.get_id()), posts=posts)	
 	else: return render_template("admin_access_required.html") 
 
 def is_admin(email):
