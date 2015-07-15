@@ -17,7 +17,7 @@ def add_post():
 	db.session.add(p)
 	db.session.commit()
 	posts = u.posts.all()
-	return redirect("http://192.168.72.133:5000/view_posts?email=" + user, 302) 
+	return redirect("http://0.0.0.0:5000/view_posts?email=" + user, 302) 
 
 @app.route('/view_posts')
 @login_required
@@ -100,7 +100,7 @@ def login():
 	redirect_url = request.args.get('redirect_url')
     	if redirect_url:
         	return redirect('http://' + redirect_url,  302)
-	else: return redirect("http://192.168.72.133:5000/view_posts?email=" + current_user.get_id(), 302)
+	else: return redirect("http://0.0.0.0:5000/view_posts?email=" + current_user.get_id(), 302)
     form = LoginForm()
     if form.validate_on_submit():
 	user = models.User.query.get(form.email.data)
@@ -113,7 +113,7 @@ def login():
                 db.session.commit()
                 login_user(user, remember=True)
 		print "now will be redirect!"
-		return redirect("http://192.168.72.133:5000/view_posts?email=" + current_user.get_id(), 302)
+		return redirect("http://0.0.0.0:5000/view_posts?email=" + current_user.get_id(), 302)
     return render_template("login.html", form=form)
 
 @app.route("/logout", methods=["GET"])
@@ -132,7 +132,7 @@ def search():
     search_results = [] 
     search_string = request.form["search"]
     posts = []
-    q = db.engine.execute("SELECT user_id, body FROM post WHERE body LIKE {0}".format(search_string))
+    q = db.engine.execute("SELECT user_id, body FROM post WHERE body LIKE '%{0}%'".format(search_string))
     for row in q:
     	posts.append(row)
     nicknames = get_nicknames(posts)
