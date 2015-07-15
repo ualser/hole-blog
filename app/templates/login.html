@@ -6,10 +6,10 @@
   <body>
 	<form method="POST" action="/login">
         <input type='hidden' name='redirect_url' value='http://127.0.0.1:5000/view_posts'/>
-	{{ form.hidden_tag() }}
-	{{ form.email.label }} {{ form.email }} 
-	{{ form.password.label }} {{ form.password }}
-	<input type="submit">
+      	{{ form.hidden_tag() }}
+      	{{ form.email.label }} {{ form.email }} 
+      	{{ form.password.label }} {{ form.password }}
+	     <input type="submit">
         </form>
 
     <hr>

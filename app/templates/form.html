@@ -1,9 +1,15 @@
 {% extends "index.html" %}
 {% block form %}
 	<form method="POST" action="add_post">
-	<input type="text" name="post">
-	<input type="hidden" name="user" value={{user_id}}>
-	<input type="submit">
+	<div class="raw">
+		    <div class="input-group">
+		      <input type="text" name="post" class="form-control" placeholder="Enter your message..."/>
+		      <input type="hidden" name="user" value={{user_id}}>
+		      <span class="input-group-btn">
+		        <input class="btn btn-default" type="submit" type="button"/>
+		      </span>
+		    </div><!-- /input-group -->
+		</div>
 	</form>
 {% endblock %}
 

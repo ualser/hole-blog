@@ -1,9 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>{{ user.nickname }} messages</h1>
+<div class="raw" style="margin-top: 30px">
+<div class="col-md-3"></div>
+<div class="col-md-6">   
+ <div class="panel panel-default">
+  <div class="panel-heading"><h2><b>{{ user.nickname }}</b> messages</h2></div>
+  <div class="panel-body">
     {% for post in posts %}
-    <div><p>{{ post.author.nickname }} says: <b>{{ post.body|safe }}</b></p></div>
+    <div class="raw"><p>{{ post.body|safe }}</p></div>
+    <br/>
+    <div class="raw"><i style="float: right; font-size: 0.8em">{{ post.author.nickname }}</i></div>
+	<br/>
+    <hr/>
     {% endfor %}
-{% block form %}{% endblock %}
+    {% block form %}{% endblock %}
+    </div>
+</div>
+ </div>
+<div class="col-md-3"></div>
+</div>
 {% endblock %}
 

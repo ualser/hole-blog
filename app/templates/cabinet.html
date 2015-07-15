@@ -1,9 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-    <h3>Change Password</h3>
-    <form method="POST" action='/change_password'>
-	<input type="text" name="new_pass"/>
-	<input type="submit" value="Submit new password"/>
-    </form>
+<div class="raw">
+<div class="col-md-4"></div>
+<div class="col-md-4">
+	    <form method="POST" action='/change_password'>
+	   	    <h3>Change Password</h3>
+	    	 <label for="new_pass">New Password</label>
+	    	 <div class="form-group">
+			<input type="password" placeholder="Password" name="new_pass" id="new_pass" class="form-control input-md"/>
+			</div>
+				<input type="submit" style="margin-left: 190px" value="Submit new password" class="btn btn-primary"/>
+	    </form>
+</div>
+<div class="col-md-4"></div>
+</div>
 {% endblock %}
 

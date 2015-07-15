@@ -8,15 +8,23 @@
     <meta name="keywords" content="">
     <meta name="author" content="">
     <meta charset="utf-8">
-
+   <!--  <link href="static/bootstrap/bootstrap.min.css" rel="stylesheet" media="screen"> -->
+    <link href="/static/main.css" rel="stylesheet" media="screen">
+    <!-- <link href="/static/css/bootstrap/bootstrap.min.css" rel="stylesheet" media="screen"> -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
+    <!-- <link href="{{ url_for('static', filename='bootstrap/bootstrap.min.css') }}" rel="stylesheet"> -->
     {% endblock %}
   </head>
   <body>
      
-	 <div class="navbar navbar-fixed-top">
+	 <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
+              <div class="navbar-header">
+                <a class="navbar-brand" rel="home" href="#" title="Kill Unicorns">
+                    <img style="max-width:50px; margin-top: -7px; padding-right: 10px"
+                         src="{{ url_for('static', filename='logo.jpg') }}">
+                </a>
+              </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-left">
                     <li>
@@ -26,45 +34,43 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        {% for user_id in get_all_user_ids() %}
-                       <li><a href="/view_posts?email={{user_id[0]}}">{{user_id[1]}}</a></li>
-               {% endfor %}
-               {% if admin %}
-                        <li><a href="/admin">ChatRoom</a></li>
-               {% endif %}
-		
+                              {% for user_id in get_all_user_ids() %}
+                               <li><a href="/view_posts?email={{user_id[0]}}">{{user_id[1]}}</a></li>
+                              {% endfor %}
+                              {% if admin %}
+                                <li><a href="/admin">ChatRoom</a></li>
+                              {% endif %}
                             </ul>
                         </div>
                     </li>
+                    <li><a href='/cabinet'>Cabinet</a></li>
                 </ul>
-                <a href='/cabinet'>Cabinet</a>
-		<ul class="nav navbar-nav navbar-right">
-                    {% if admin %}
-			<form style="float: right" method="POST" action="/search">
-			Search:	<input type="text" name="search" />
-			</form>
-		    {% endif %}                   
-        {% if session.logged_in %}
-                    <li><a style="float:right; margin-top:10px" href="#">Logout</a></li>
-                  {% endif %}
+                
+		  <ul class="nav navbar-nav navbar-right">
+            {% if admin %}
+      			<form style="float: right" method="POST" action="/search">
+      			<input type="text" name="search" class="input-sm form-control" style="margin-top:10px" placeholder="Search..."/>
+      			</form>
+      		  {% endif %}                   
+            {% if session.logged_in %}
+              <li><a style="float:right; margin-top:10px" href="#">Logout</a></li>
+            {% endif %}
 
-                                        
+                                              
                 </ul>
             </div>
         </div>
     </div>
 	 
-	 
-	 
-    <div style="margin-top:50px" class="container body-content">
+    <div class="container body-content main-content raw">
           {% block content %}
           {% endblock %}
-        <hr>
-        
     </div>
        {% block footer %}
         <footer class="footer">
-            <p>&copy; EvilTerroristsAgainstUnicornsAndRainbows</p>
+          <div class="raw">
+            <p style="margin-left: 20px">&copy; EvilTerroristsAgainstUnicornsAndRainbows</p>
+          </div>
         </footer>
         {% endblock %}
 
