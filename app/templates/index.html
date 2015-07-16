@@ -9,7 +9,7 @@
     {% for post in posts %}
     <div class="raw"><p>{{ post.body|safe }}</p></div>
     <br/>
-    <div class="raw"><i style="float: right; font-size: 0.8em">{{ post.author.nickname }}</i></div>
+    <div class="raw"><i style="float: right; font-size: 0.8em">{{ post.timestamp.strftime("%Y-%m-%d %H:%M:%S") }}</i></div>
 	<br/>
     <hr/>
     {% endfor %}

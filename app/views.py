@@ -8,6 +8,8 @@ from .forms import LoginForm
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+IP = '0.0.0.0:5000'
+
 @app.route('/add_post', methods=['POST']) #missing function level control vulnerability
 def add_post():
 	user = request.form['user']
@@ -17,7 +19,7 @@ def add_post():
 	db.session.add(p)
 	db.session.commit()
 	posts = u.posts.all()
-	return redirect("http://0.0.0.0:5000/view_posts?email=" + user, 302) 
+	return redirect("http://" + IP + "/view_posts?email=" + user, 302) 
 
 @app.route('/view_posts')
 @login_required
@@ -100,7 +102,7 @@ def login():
 	redirect_url = request.args.get('redirect_url')
     	if redirect_url:
         	return redirect('http://' + redirect_url,  302)
-	else: return redirect("http://0.0.0.0:5000/view_posts?email=" + current_user.get_id(), 302)
+	else: return redirect("http://" + IP + "/view_posts?email=" + current_user.get_id(), 302)
     form = LoginForm()
     if form.validate_on_submit():
 	user = models.User.query.get(form.email.data)
@@ -113,7 +115,7 @@ def login():
                 db.session.commit()
                 login_user(user, remember=True)
 		print "now will be redirect!"
-		return redirect("http://0.0.0.0:5000/view_posts?email=" + current_user.get_id(), 302)
+		return redirect("http://" + IP + "/view_posts?email=" + current_user.get_id(), 302)
     return render_template("login.html", form=form)
 
 @app.route("/logout", methods=["GET"])
