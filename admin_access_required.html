@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-    <h1>{{ user.nickname }} messages</h1>
-    {% for post in posts %}
-    <div><p>{{ post.author.nickname }} says: <b>{{ post.body|safe }}</b></p></div>
-    {% endfor %}
-{% block form %}{% endblock %}
-{% endblock %}
-
