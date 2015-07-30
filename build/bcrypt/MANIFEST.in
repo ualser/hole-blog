@@ -1,3 +1,0 @@
-include LICENSE README.rst
-include src/build_bcrypt.py
-recursive-include src/crypt_blowfish-1.3 *
