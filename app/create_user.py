@@ -26,8 +26,5 @@ def main():
         db.session.commit()
         print 'User added.'
 
-
-
 if __name__ == '__main__':
     sys.exit(main())
-
